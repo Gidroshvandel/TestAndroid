@@ -23,14 +23,14 @@
         android:id="@+id/button_registration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/button_registration"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="36dp"
-        android:layout_marginRight="16dp" />
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/button_registration"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintRight_creator="1" />
 
     <EditText
         android:id="@+id/editTextLogin"
@@ -61,10 +61,10 @@
         android:layout_marginLeft="1dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/button_switch"
         android:layout_width="88dp"
         android:layout_height="48dp"
-        android:text="Button"
+        android:text="@string/text_show"
         android:layout_marginStart="15dp"
         app:layout_constraintBaseline_toBaselineOf="@+id/editTextPassword"
         tools:layout_constraintBaseline_creator="1"
