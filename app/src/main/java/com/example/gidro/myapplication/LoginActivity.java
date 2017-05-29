@@ -1,6 +1,7 @@
 package com.example.gidro.myapplication;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +10,10 @@ import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.gidro.myapplication.api.service.ApiService;
@@ -26,9 +29,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    Button btnLogin;
-    Button btnRegistration;
-    Button btnSwitch;
+    private Button btnLogin;
+    private Button btnRegistration;
+    private EditText passwordText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,27 +40,39 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin = (Button) findViewById(R.id.button_login);
         btnRegistration = (Button) findViewById(R.id.button_registration);
-        btnSwitch = (Button) findViewById(R.id.button_switch);
 
-        btnSwitch.setOnTouchListener(new View.OnTouchListener() {
+        passwordText  = (EditText) findViewById(R.id.editTextPassword);
+
+        passwordText.setOnTouchListener(new View.OnTouchListener() {
+            @Override
             public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+                if(event.getRawX() >= (passwordText.getRight() - passwordText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
 
-                EditText password_text = (EditText) findViewById(R.id.editTextPassword);
-
-                switch ( event.getAction() ) {
+                    switch ( event.getAction() ) {
 
                     case MotionEvent.ACTION_UP:
-                        password_text.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                        btnSwitch.setText(R.string.text_show);
+                        passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        passwordText.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.ic_eye_open, 0);
                         break;
 
                     case MotionEvent.ACTION_DOWN:
-                        password_text.setInputType(InputType.TYPE_CLASS_TEXT);
-                        btnSwitch.setText(R.string.text_hide);
+                        passwordText.setInputType(InputType.TYPE_CLASS_TEXT);
+                        passwordText.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.ic_eye_close, 0);
                         break;
 
+                        // your action here
+//                        Toast.makeText(LoginActivity.this, "абвгдейка", Toast.LENGTH_SHORT).show();
+
+                    }
+                    return true;
                 }
-                return true;
+                else{
+                    return false;
+                }
             }
         });
 
@@ -100,62 +115,49 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public boolean onTouch(View v, MotionEvent event) {
-
-        EditText password_text = (EditText) findViewById(R.id.editTextPassword);
-
-        switch ( event.getAction() ) {
-
-            case MotionEvent.ACTION_UP:
-                password_text.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                break;
-
-            case MotionEvent.ACTION_DOWN:
-                password_text.setInputType(InputType.TYPE_CLASS_TEXT);
-                break;
-
-        }
-        return true;
-    }
-
     private void sendNetworkRequest(User user) {
 
-//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//        // set your desired log level
-//        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-//
-//        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-//        // add your other interceptors …
-//
-//        // add logging as last interceptor
-//        httpClient.addInterceptor(logging);  // <-- this is the important line!
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
 
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl("http://10.0.2.2:2525/api/")
-                .addConverterFactory(GsonConverterFactory.create());
-//                .client(httpClient.build());
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build());
 
         Retrofit retrofit = builder.build();
 
         ApiService apiService = retrofit.create(ApiService.class);
 
         Call<User> call = apiService.login(user.getEmail(), user.getPassword());
-//        Call<User> call = apiService.login(user);
+
+        final ProgressDialog mProgressDialog = new ProgressDialog(LoginActivity.this);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setMessage(getResources().getString(R.string.text_progress_dialog));
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.show();
 
         call.enqueue(new Callback<User>() {
 
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
-
-//                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
-//                startActivity(intent);
+                mProgressDialog.hide();
+                Intent intent = new Intent(LoginActivity.this, NotesActivity.class);
+                startActivity(intent);
 
             }
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
-
+                mProgressDialog.hide();
                 // Use the Builder class for convenient dialog construction
                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                 builder.setMessage(R.string.text_error_login)
