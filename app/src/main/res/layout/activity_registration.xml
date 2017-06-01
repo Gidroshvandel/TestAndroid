@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</LinearLayout>
+    <EditText
+        android:id="@+id/editTextName"
+        android:hint="@string/text_name"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/editTextEmail"
+        android:hint="@string/text_email"
+        android:layout_below="@id/editTextName"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.example.gidro.myapplication.CustomEditText
+        android:id="@+id/editTextPassword"
+        android:hint="@string/text_password"
+        android:layout_below="@id/editTextEmail"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginEnd="60dp"
+        android:drawableRight="@drawable/ic_eye_open"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/button_login"
+        android:text="@string/button_login"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/button_next"
+        android:text="@string/button_next"
+        android:layout_below="@id/editTextPassword"
+        android:layout_marginLeft="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginTop="25dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

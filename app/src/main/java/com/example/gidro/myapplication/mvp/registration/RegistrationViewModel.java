@@ -1,18 +1,23 @@
-package com.example.gidro.myapplication.api.model;
+package com.example.gidro.myapplication.mvp.registration;
 
 /**
- * Created by Gidro on 26.05.2017.
+ * Created by Gidro on 30.05.2017.
  */
 
-public class User {
+public class RegistrationViewModel {
 
     private String Name;
     private String Email;
     private String Password;
 
-    public User(String email, String password) {
-        Email = email;
-        Password = password;
+    private boolean isShowPassword;
+
+    public boolean isShowPassword() {
+        return isShowPassword;
+    }
+
+    public void setShowPassword(boolean showPassword) {
+        isShowPassword = showPassword;
     }
 
     public String getName() {

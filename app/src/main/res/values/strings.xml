@@ -4,9 +4,11 @@
     <string name="text_password">Password</string>
     <string name="button_login">Login</string>
     <string name="button_registration">Registration</string>
+    <string name="button_next">Далее</string>
     <string name="text_error_login">Вход не может быть выполнен. Попробуйте позже.</string>
     <string name="text_ok">Ok</string>
     <string name="text_show">Show</string>
     <string name="text_hide">Hide</string>
+    <string name="text_name">Name</string>
     <string name="text_progress_dialog">Идёт соединение с сервером</string>
 </resources>

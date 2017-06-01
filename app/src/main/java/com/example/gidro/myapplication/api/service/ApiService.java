@@ -1,24 +1,39 @@
 package com.example.gidro.myapplication.api.service;
 
-import com.example.gidro.myapplication.api.model.User;
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
-import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
-import retrofit2.http.POST;
-import retrofit2.http.Query;
+/**
+ * Created by Gidro on 01.06.2017.
+ */
 
-public interface ApiService {
+public class ApiService {
 
-//    @Headers({
-//            "Accept: application/json",
-//    })
-//    @Multipart
-//    @FormUrlEncoded
-    @POST("user")
-    Call<User> login(@Query("email") String email, @Query("password") String password);
-//    Call<User> login(@Body User user);
+    public static Retrofit getInstance(){
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        // set your desired log level
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+        // add your other interceptors …
+
+        // add logging as last interceptor
+        httpClient.addInterceptor(logging);  // <-- this is the important line!
+
+
+        Retrofit.Builder builder = new Retrofit.Builder()
+                .baseUrl("http://10.0.2.2:2525/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient.build());
+
+        Retrofit retrofit = builder.build();
+
+        return retrofit;
+
+    }
+
+
 }

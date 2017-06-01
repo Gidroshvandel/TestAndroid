@@ -4,20 +4,18 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.example.gidro.myapplication.api.service.ApiService;
 import com.example.gidro.myapplication.api.model.User;
+import com.example.gidro.myapplication.api.service.LoginService;
+import com.example.gidro.myapplication.mvp.registration.RegistrationActivity;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -29,8 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private Button btnLogin;
-    private Button btnRegistration;
     private EditText passwordText;
 
     @Override
@@ -38,8 +34,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        btnLogin = (Button) findViewById(R.id.button_login);
-        btnRegistration = (Button) findViewById(R.id.button_registration);
+        Button btnLogin = (Button) findViewById(R.id.button_login);
+        Button btnRegistration = (Button) findViewById(R.id.button_registration);
 
         passwordText  = (EditText) findViewById(R.id.editTextPassword);
 
@@ -99,11 +95,11 @@ public class LoginActivity extends AppCompatActivity {
 
     private void onClickLogin(View view) {
 
-        EditText email_text = (EditText) findViewById(R.id.editTextLogin);
+        EditText emailText = (EditText) findViewById(R.id.editTextLogin);
 
-        EditText password_text = (EditText) findViewById(R.id.editTextPassword);
+        EditText passwordText = (EditText) findViewById(R.id.editTextPassword);
 
-        User user = new User( email_text.getText().toString(), password_text.getText().toString() );
+        User user = new User( emailText.getText().toString(), passwordText.getText().toString() );
 
         sendNetworkRequest(user);
 
@@ -135,9 +131,9 @@ public class LoginActivity extends AppCompatActivity {
 
         Retrofit retrofit = builder.build();
 
-        ApiService apiService = retrofit.create(ApiService.class);
+        LoginService loginService = retrofit.create(LoginService.class);
 
-        Call<User> call = apiService.login(user.getEmail(), user.getPassword());
+        Call<User> call = loginService.login(user.getEmail(), user.getPassword());
 
         final ProgressDialog mProgressDialog = new ProgressDialog(LoginActivity.this);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
