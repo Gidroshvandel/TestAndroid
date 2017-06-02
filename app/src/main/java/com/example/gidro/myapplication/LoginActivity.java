@@ -15,6 +15,7 @@ import android.widget.EditText;
 
 import com.example.gidro.myapplication.api.model.User;
 import com.example.gidro.myapplication.api.service.LoginService;
+import com.example.gidro.myapplication.mvp.notes.NotesActivity;
 import com.example.gidro.myapplication.mvp.registration.RegistrationActivity;
 
 import okhttp3.OkHttpClient;

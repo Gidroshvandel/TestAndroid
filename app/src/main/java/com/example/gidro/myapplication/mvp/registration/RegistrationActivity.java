@@ -1,7 +1,9 @@
 package com.example.gidro.myapplication.mvp.registration;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 
 import com.example.gidro.myapplication.CustomEditText;
 import com.example.gidro.myapplication.LoginActivity;
+import com.example.gidro.myapplication.mvp.notes.NotesActivity;
 import com.example.gidro.myapplication.R;
 
 /**
@@ -27,6 +30,8 @@ public class RegistrationActivity extends Activity implements RegistrationContra
     private EditText emailText;
     private CustomEditText passwordCustomText;
     private ProgressDialog mProgressDialog;
+    private AlertDialog.Builder builder;
+
     private View.OnClickListener oclBtn = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -48,7 +53,9 @@ public class RegistrationActivity extends Activity implements RegistrationContra
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
 
-        presenter = new RegistrationPresenter(this, new RegistrationViewModel());
+        presenter = new RegistrationPresenter(this, new RegistrationViewModel(), new RegistrationModel());
+
+        builder = new AlertDialog.Builder(this);
 
         mProgressDialog = new ProgressDialog(this);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -124,11 +131,13 @@ public class RegistrationActivity extends Activity implements RegistrationContra
                 presenter.onPasswordVisibilityChange();
             }
         });
+
+        presenter.onViewCreate();
     }
 
     @Override
     public void showNotes() {
-//        startActivity(new Intent(RegistrationActivity.this, LoginActivity.class));
+        startActivity(new Intent(RegistrationActivity.this, NotesActivity.class));
     }
 
     @Override
@@ -160,5 +169,29 @@ public class RegistrationActivity extends Activity implements RegistrationContra
 
         mProgressDialog.hide();
 
+    }
+
+    @Override
+    public void showDialogErr() {
+        builder.setMessage(R.string.text_reg_dialog_err)
+                .setNegativeButton(R.string.text_ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                        presenter.onDialogErrClick();
+                    }
+                });
+        builder.show();
+    }
+
+    @Override
+    public void showDialogOk() {
+        builder.setMessage(R.string.text_reg_dialog_ok)
+                .setNegativeButton(R.string.text_ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // User cancelled the dialog
+                        presenter.onDialogOkClick();
+                    }
+                });
+        builder.show();
     }
 }

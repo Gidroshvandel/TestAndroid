@@ -2,6 +2,8 @@ package com.example.gidro.myapplication.mvp.registration;
 
 import android.text.TextUtils;
 
+import com.example.gidro.myapplication.api.model.User;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,9 +18,10 @@ public class RegistrationPresenter implements RegistrationContract.Presenter {
     private RegistrationViewModel viewModel;
     private RegistrationModel model;
 
-    public RegistrationPresenter(RegistrationContract.View view, RegistrationViewModel viewModel) {
+    public RegistrationPresenter(RegistrationContract.View view, RegistrationViewModel viewModel, RegistrationModel model) {
         this.view = view;
         this.viewModel = viewModel;
+        this.model = model;
     }
 
     @Override
@@ -33,17 +36,19 @@ public class RegistrationPresenter implements RegistrationContract.Presenter {
     public void onNextClick() {
         if (isFilled()){
             view.showProgress();
+            System.out.println("Значения моделей: "+viewModel.getName()+" "+viewModel.getEmail()+" "+viewModel.getPassword() );
             model.registration(viewModel.getName(), viewModel.getEmail(), viewModel.getPassword(), new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) {
                     view.hideProgress();
+                    view.showDialogOk();
                 }
                 @Override
                 public void onFailure(Call call, Throwable t) {
                     view.hideProgress();
+                    view.showDialogErr();
                 }
             });
-            view.showNotes();
         }
     }
 
@@ -72,18 +77,29 @@ public class RegistrationPresenter implements RegistrationContract.Presenter {
     public void onPasswordVisibilityChange() {
 
         if (viewModel.isShowPassword() ){
-            view.showPasswordValue();
+            view.hidePasswordValue();
             viewModel.setShowPassword(false);
         }
         else {
-            view.hidePasswordValue();
+            view.showPasswordValue();
             viewModel.setShowPassword(true);
         }
 
     }
 
-    private boolean isFilled(){
-        return  !(TextUtils.isEmpty(viewModel.getEmail()) && TextUtils.isEmpty(viewModel.getName()) && TextUtils.isEmpty(viewModel.getName()));
+    @Override
+    public void onDialogErrClick() {
+
     }
 
+    @Override
+    public void onDialogOkClick() {
+
+        view.showNotes();
+
+    }
+
+    private boolean isFilled(){
+        return  !(TextUtils.isEmpty(viewModel.getName()) || TextUtils.isEmpty(viewModel.getEmail()) || TextUtils.isEmpty(viewModel.getPassword()));
+    }
 }

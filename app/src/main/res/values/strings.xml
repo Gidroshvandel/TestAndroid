@@ -11,4 +11,7 @@
     <string name="text_hide">Hide</string>
     <string name="text_name">Name</string>
     <string name="text_progress_dialog">Идёт соединение с сервером</string>
+    <string name="text_reg_dialog_err">Регистрация не может быть выполнена. Попробуйте позже.</string>
+    <string name="text_reg_dialog_ok">Регистрация прошла успешно!</string>
+
 </resources>

@@ -19,6 +19,10 @@ public interface RegistrationContract {
 
         void hideProgress();
 
+        void showDialogErr();
+
+        void showDialogOk();
+
     }
     interface Presenter {
 
@@ -35,6 +39,11 @@ public interface RegistrationContract {
         void onPasswordChange(String password);
 
         void onPasswordVisibilityChange();
+
+        void onDialogErrClick();
+
+        void onDialogOkClick();
+
 
     }
 }
