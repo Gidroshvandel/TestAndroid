@@ -13,7 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.gidro.myapplication.api.model.User;
+import com.example.gidro.myapplication.model.User;
 import com.example.gidro.myapplication.api.service.LoginService;
 import com.example.gidro.myapplication.mvp.notes.NotesActivity;
 import com.example.gidro.myapplication.mvp.registration.RegistrationActivity;

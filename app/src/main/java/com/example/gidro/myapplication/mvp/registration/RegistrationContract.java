@@ -44,6 +44,5 @@ public interface RegistrationContract {
 
         void onDialogOkClick();
 
-
     }
 }

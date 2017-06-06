@@ -1,4 +1,4 @@
-package com.example.gidro.myapplication.api.model;
+package com.example.gidro.myapplication.model;
 
 /**
  * Created by Gidro on 26.05.2017.

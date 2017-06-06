@@ -1,13 +1,13 @@
 package com.example.gidro.myapplication.api.service;
 
-import com.example.gidro.myapplication.api.model.User;
+import com.example.gidro.myapplication.model.Note;
+import com.example.gidro.myapplication.model.NoteList;
+import com.example.gidro.myapplication.model.User;
+
+import java.util.ArrayList;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
-import retrofit2.http.Headers;
-import retrofit2.http.Multipart;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
@@ -17,4 +17,7 @@ public interface LoginService {
     Call<User> login(@Query("email") String email, @Query("password") String password);
     @POST("registration")
     Call<User> registration(@Query("name") String name, @Query("email") String email, @Query("password") String password);
+    @GET("getNotes")
+    Call<NoteList> getNotes(@Query("email") String email);
+
 }

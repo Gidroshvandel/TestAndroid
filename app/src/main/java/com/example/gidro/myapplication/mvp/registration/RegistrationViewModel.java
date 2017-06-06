@@ -43,4 +43,5 @@ public class RegistrationViewModel {
     public void setPassword(String password) {
         Password = password;
     }
+
 }

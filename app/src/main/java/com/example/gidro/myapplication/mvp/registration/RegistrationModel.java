@@ -1,6 +1,5 @@
 package com.example.gidro.myapplication.mvp.registration;
 
-import com.example.gidro.myapplication.api.model.User;
 import com.example.gidro.myapplication.api.service.ApiService;
 import com.example.gidro.myapplication.api.service.LoginService;
 

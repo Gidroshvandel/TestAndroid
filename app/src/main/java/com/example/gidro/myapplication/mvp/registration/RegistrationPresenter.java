@@ -2,8 +2,6 @@ package com.example.gidro.myapplication.mvp.registration;
 
 import android.text.TextUtils;
 
-import com.example.gidro.myapplication.api.model.User;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -36,7 +34,6 @@ public class RegistrationPresenter implements RegistrationContract.Presenter {
     public void onNextClick() {
         if (isFilled()){
             view.showProgress();
-            System.out.println("Значения моделей: "+viewModel.getName()+" "+viewModel.getEmail()+" "+viewModel.getPassword() );
             model.registration(viewModel.getName(), viewModel.getEmail(), viewModel.getPassword(), new Callback() {
                 @Override
                 public void onResponse(Call call, Response response) {
