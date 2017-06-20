@@ -1,6 +1,7 @@
 package com.example.gidro.myapplication.mvp.notes;
 
 import com.example.gidro.myapplication.model.Note;
+import com.example.gidro.myapplication.mvp.BasePresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +22,7 @@ public interface NotesContract {
         void hideProgress();
 
     }
-    interface Presenter {
-
-        void onViewCreate();
+    interface Presenter extends BasePresenter {
 
         void onListElementClick(Note note, int noteId);
 

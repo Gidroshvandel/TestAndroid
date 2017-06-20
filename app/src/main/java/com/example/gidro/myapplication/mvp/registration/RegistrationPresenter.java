@@ -85,11 +85,6 @@ public class RegistrationPresenter implements RegistrationContract.Presenter {
     }
 
     @Override
-    public void onDialogErrClick() {
-
-    }
-
-    @Override
     public void onDialogOkClick() {
 
         view.showNotes();

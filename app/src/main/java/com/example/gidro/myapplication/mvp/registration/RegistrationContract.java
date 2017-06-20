@@ -1,5 +1,7 @@
 package com.example.gidro.myapplication.mvp.registration;
 
+import com.example.gidro.myapplication.mvp.BasePresenter;
+
 /**
  * Created by Gidro on 30.05.2017.
  */
@@ -24,9 +26,7 @@ public interface RegistrationContract {
         void showDialogOk();
 
     }
-    interface Presenter {
-
-        void onViewCreate();
+    interface Presenter extends BasePresenter{
 
         void onNextClick();
 
@@ -39,8 +39,6 @@ public interface RegistrationContract {
         void onPasswordChange(String password);
 
         void onPasswordVisibilityChange();
-
-        void onDialogErrClick();
 
         void onDialogOkClick();
 

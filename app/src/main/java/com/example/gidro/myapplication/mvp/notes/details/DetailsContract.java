@@ -1,6 +1,7 @@
 package com.example.gidro.myapplication.mvp.notes.details;
 
 import com.example.gidro.myapplication.model.Note;
+import com.example.gidro.myapplication.mvp.BasePresenter;
 
 import java.util.List;
 
@@ -24,9 +25,7 @@ public interface DetailsContract {
         void showDialogSave();
 
     }
-    interface Presenter {
-
-        void onViewCreate();
+    interface Presenter extends BasePresenter {
 
         void onNoteHeaderChange(String noteHeader);
 

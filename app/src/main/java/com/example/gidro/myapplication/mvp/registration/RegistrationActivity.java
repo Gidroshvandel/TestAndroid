@@ -30,7 +30,7 @@ public class RegistrationActivity extends Activity implements RegistrationContra
     private EditText emailText;
     private CustomEditText passwordCustomText;
     private ProgressDialog mProgressDialog;
-    private AlertDialog.Builder builder;
+    private AlertDialog.Builder dialog;
 
     private View.OnClickListener oclBtn = new View.OnClickListener() {
         @Override
@@ -55,12 +55,18 @@ public class RegistrationActivity extends Activity implements RegistrationContra
 
         presenter = new RegistrationPresenter(this, new RegistrationViewModel(), new RegistrationModel());
 
-        builder = new AlertDialog.Builder(this);
+        initUi();
+
+        presenter.onViewCreate();
+    }
+
+    private void initUi(){
+        dialog = new AlertDialog.Builder(this);
 
         Button loginBtn = (Button) findViewById(R.id.button_login);
-        Button nextBtn = (Button) findViewById(R.id.button_next);
-
         loginBtn.setOnClickListener(oclBtn);
+
+        Button nextBtn = (Button) findViewById(R.id.button_next);
         nextBtn.setOnClickListener(oclBtn);
 
         nameText = (EditText) findViewById(R.id.editTextName);
@@ -110,8 +116,6 @@ public class RegistrationActivity extends Activity implements RegistrationContra
                 presenter.onPasswordVisibilityChange();
             }
         });
-
-        presenter.onViewCreate();
     }
 
     @Override
@@ -156,25 +160,24 @@ public class RegistrationActivity extends Activity implements RegistrationContra
 
     @Override
     public void showDialogErr() {
-        builder.setMessage(R.string.text_reg_dialog_err)
+        dialog.setMessage(R.string.text_reg_dialog_err)
                 .setNegativeButton(R.string.text_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
-                        presenter.onDialogErrClick();
                     }
                 });
-        builder.show();
+        dialog.show();
     }
 
     @Override
     public void showDialogOk() {
-        builder.setMessage(R.string.text_reg_dialog_ok)
+        dialog.setMessage(R.string.text_reg_dialog_ok)
                 .setNegativeButton(R.string.text_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
                         presenter.onDialogOkClick();
                     }
                 });
-        builder.show();
+        dialog.show();
     }
 }

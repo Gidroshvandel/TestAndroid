@@ -26,8 +26,6 @@ import java.util.List;
 
 public class NotesActivity extends Activity implements NotesContract.View, NotesAdapter.Callback {
 
-    Handler mainHandler;
-
     private NotesContract.Presenter presenter;
 
     private NotesAdapter adapter;
@@ -41,13 +39,12 @@ public class NotesActivity extends Activity implements NotesContract.View, Notes
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
 
-        mainHandler = new Handler(this.getMainLooper());
-
-        llm = new LinearLayoutManager(this);
-
         presenter = new NotesPresenter(this, new NotesViewModel(), new NotesModel());
 
+        llm = new LinearLayoutManager(this);
+        
         notesRv = (RecyclerView) findViewById(R.id.rv_notes);
+        notesRv.setLayoutManager(llm);
 
         presenter.onViewCreate();
 
@@ -64,7 +61,6 @@ public class NotesActivity extends Activity implements NotesContract.View, Notes
     @Override
     public void showNoteElements(ArrayList<Note> noteList) {
         adapter = new NotesAdapter(noteList, this);
-        notesRv.setLayoutManager(llm);
         notesRv.setAdapter(adapter);
     }
 

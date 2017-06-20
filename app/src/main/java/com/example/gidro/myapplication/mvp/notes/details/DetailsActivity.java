@@ -17,8 +17,6 @@ import com.example.gidro.myapplication.model.Note;
 import com.example.gidro.myapplication.utils.Utils;
 import com.squareup.picasso.Picasso;
 
-import java.util.logging.Logger;
-
 /**
  * Created by Gidro on 07.06.2017.
  */
@@ -33,7 +31,7 @@ public class DetailsActivity extends Activity implements DetailsContract.View {
     private Button noteDetailsDeleteBtn;
     private Button noteDetailsSaveBtn;
     private EditText editTextDetails;
-    private AlertDialog.Builder builder;
+    private AlertDialog.Builder dialog;
 
     private View.OnClickListener oclBtn = new View.OnClickListener() {
         @Override
@@ -59,33 +57,42 @@ public class DetailsActivity extends Activity implements DetailsContract.View {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes_details);
 
-        builder = new AlertDialog.Builder(this);
-
         presenter = new DetailsPresenter(this, new DetailsViewModel(), (Note) getIntent().getExtras().get("note"));
 
-        noteDetailsPriority = (ImageView) findViewById(R.id.noteDetailsPriority);
-        noteDetailsPicture = (ImageView) findViewById(R.id.noteDetailsPicture);
-        editTextHeader = (EditText) findViewById(R.id.editTextHeader);
-        editTextDetails = (EditText) findViewById(R.id.editTextDetails);
-        noteDetailsDeleteBtn = (Button) findViewById(R.id.noteDetailsDelete);
-        noteDetailsSaveBtn = (Button) findViewById(R.id.noteDetailsSave);
+        initUi();
 
-        noteDetailsDeleteBtn.setOnClickListener(oclBtn);
-        noteDetailsSaveBtn.setOnClickListener(oclBtn);
+        presenter.onViewCreate();
+    }
+
+    private void initUi(){
+        dialog = new AlertDialog.Builder(this);
+
+        noteDetailsPicture = (ImageView) findViewById(R.id.noteDetailsPicture);
+
+        noteDetailsPriority = (ImageView) findViewById(R.id.noteDetailsPriority);
         noteDetailsPriority.setOnClickListener(oclBtn);
 
+        noteDetailsDeleteBtn = (Button) findViewById(R.id.noteDetailsDelete);
+        noteDetailsDeleteBtn.setOnClickListener(oclBtn);
+
+        noteDetailsSaveBtn = (Button) findViewById(R.id.noteDetailsSave);
+        noteDetailsSaveBtn.setOnClickListener(oclBtn);
+
+        editTextHeader = (EditText) findViewById(R.id.editTextHeader);
         editTextHeader.addTextChangedListener(new TextWatcher() {
-          @Override
-          public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-          }
-          @Override
-          public void onTextChanged(CharSequence s, int start, int before, int count) {
-          }
-          @Override
-          public void afterTextChanged(Editable s) {
-              presenter.onNoteHeaderChange(s.toString());
-          }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                presenter.onNoteHeaderChange(s.toString());
+            }
         });
+
+        editTextDetails = (EditText) findViewById(R.id.editTextDetails);
         editTextDetails.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -98,8 +105,6 @@ public class DetailsActivity extends Activity implements DetailsContract.View {
                 presenter.onNoteDetailsInformationChange(s.toString());
             }
         });
-
-        presenter.onViewCreate();
     }
 
     @Override
@@ -137,20 +142,20 @@ public class DetailsActivity extends Activity implements DetailsContract.View {
 
     @Override
     public void showDialogSave() {
-        builder.setMessage(R.string.text_dialog_save);
-        builder.setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
+        dialog.setMessage(R.string.text_dialog_save);
+        dialog.setPositiveButton(R.string.text_ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
                         presenter.onDialogSaveOkClick();
                     }
                 });
-        builder.setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.text_cancel, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // User cancelled the dialog
                         presenter.onDialogSaveCancelClick();
                     }
                 });
-        builder.show();
+        dialog.show();
     }
 
     @Override
