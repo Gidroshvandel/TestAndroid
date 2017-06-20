@@ -6,42 +6,42 @@ package com.example.gidro.myapplication.model;
 
 public class User {
 
-    private String Name;
-    private String Email;
-    private String Password;
+    private String name;
+    private String email;
+    private String password;
 
     public User(String email, String password) {
-        Email = email;
-        Password = password;
+        this.email = email;
+        this.password = password;
     }
 
     public User(String name, String email, String password) {
-        Name = name;
-        Email = email;
-        Password = password;
+        this.name = name;
+        this.email = email;
+        this.password = password;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getEmail() {
-        return Email;
+        return email;
     }
 
     public void setEmail(String email) {
-        Email = email;
+        this.email = email;
     }
 
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     public void setPassword(String password) {
-        Password = password;
+        this.password = password;
     }
 }
