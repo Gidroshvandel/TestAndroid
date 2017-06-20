@@ -5,13 +5,17 @@
     <string name="button_login">Login</string>
     <string name="button_registration">Registration</string>
     <string name="button_next">Далее</string>
+    <string name="button_delete">Delete</string>
+    <string name="button_back">Back</string>
     <string name="text_error_login">Вход не может быть выполнен. Попробуйте позже.</string>
     <string name="text_ok">Ok</string>
+    <string name="text_cancel">Cancel</string>
     <string name="text_show">Show</string>
     <string name="text_hide">Hide</string>
     <string name="text_name">Name</string>
     <string name="text_progress_dialog">Идёт соединение с сервером</string>
     <string name="text_reg_dialog_err">Регистрация не может быть выполнена. Попробуйте позже.</string>
     <string name="text_reg_dialog_ok">Регистрация прошла успешно!</string>
+    <string name="text_dialog_save">Сохранить данные?</string>
 
 </resources>

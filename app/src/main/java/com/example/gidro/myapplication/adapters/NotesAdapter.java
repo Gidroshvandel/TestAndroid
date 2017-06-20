@@ -11,6 +11,7 @@ import com.example.gidro.myapplication.R;
 import com.example.gidro.myapplication.model.Note;
 import com.example.gidro.myapplication.utils.Utils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,20 +20,35 @@ import java.util.List;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHolder> {
 
-    private List<Note> noteList;
+    private final Callback callback;
+    private ArrayList<Note> noteList;
+
+    public interface Callback {
+
+        void onNoteClick(Note note, int noteId);
+
+    }
 
     @Override
     public NoteViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_notes, parent, false);
+
         NoteViewHolder noteViewHolder = new NoteViewHolder(v);
         return noteViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(NoteViewHolder holder, int position) {
+    public void onBindViewHolder(NoteViewHolder holder, final int position) {
 
         holder.header.setText(noteList.get(position).getHeader());
-        holder.notePriority.setImageResource(Utils.numberToDrawbleIdPriority(noteList.get(position).getPriority()));
+        holder.notePriority.setImageResource(Utils.numberToDrawableIdPriority(noteList.get(position).getPriority()));
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callback.onNoteClick(noteList.get(position), position);
+            }
+        });
+
     }
 
     @Override
@@ -40,23 +56,42 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
         return noteList.size();
     }
 
-    public static class NoteViewHolder extends RecyclerView.ViewHolder{
+    public class NoteViewHolder extends RecyclerView.ViewHolder{
 
-        TextView header;
-        ImageView notePriority;
+        private TextView header;
+        private ImageView notePriority;
+        private ViewGroup mainLayout;
+
 
         public NoteViewHolder(View itemView) {
             super(itemView);
-            header = (TextView)itemView.findViewById(R.id.header);
-            notePriority = (ImageView)itemView.findViewById(R.id.note_priority);
+            header = (TextView) itemView.findViewById(R.id.header);
+            notePriority = (ImageView) itemView.findViewById(R.id.note_priority);
+            mainLayout = (ViewGroup) itemView.findViewById(R.id.main_notes);
+            mainLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    System.out.println("id of click "+getAdapterPosition());
+                    callback.onNoteClick(noteList.get(getAdapterPosition()), getAdapterPosition());
+                }
+            });
         }
     }
 
-    public NotesAdapter(List<Note> noteList){
+    public NotesAdapter(ArrayList<Note> noteList, Callback callback){
+        this.noteList = noteList;
+        this.callback = callback;
+    }
+
+    public ArrayList<Note> getNoteList() {
+        return noteList;
+    }
+
+    public void setNoteList(ArrayList<Note> noteList) {
         this.noteList = noteList;
     }
 
-    public void updateData(List<Note> noteList){
+    public void updateData(ArrayList<Note> noteList){
         this.noteList = noteList;
         notifyDataSetChanged();
     }

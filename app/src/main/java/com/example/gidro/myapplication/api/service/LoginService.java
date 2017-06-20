@@ -1,10 +1,10 @@
 package com.example.gidro.myapplication.api.service;
 
 import com.example.gidro.myapplication.model.Note;
-import com.example.gidro.myapplication.model.NoteList;
 import com.example.gidro.myapplication.model.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -18,6 +18,6 @@ public interface LoginService {
     @POST("registration")
     Call<User> registration(@Query("name") String name, @Query("email") String email, @Query("password") String password);
     @GET("getNotes")
-    Call<NoteList> getNotes(@Query("email") String email);
+    Call<ArrayList<Note>> getNotes(@Query("email") String email);
 
 }

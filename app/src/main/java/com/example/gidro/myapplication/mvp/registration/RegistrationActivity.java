@@ -57,29 +57,8 @@ public class RegistrationActivity extends Activity implements RegistrationContra
 
         builder = new AlertDialog.Builder(this);
 
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setMessage(getResources().getString(R.string.text_progress_dialog));
-        mProgressDialog.setCanceledOnTouchOutside(false);
-
         Button loginBtn = (Button) findViewById(R.id.button_login);
         Button nextBtn = (Button) findViewById(R.id.button_next);
-        // создание обработчика
-        View.OnClickListener oclBtn = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // по id определеяем кнопку, вызвавшую этот обработчик
-                switch (v.getId()) {
-                    case R.id.button_login:
-                        presenter.onLoginClick();
-                        break;
-                    case R.id.button_next:
-                        presenter.onNextClick();
-                        break;
-                }
-
-            }
-        };
 
         loginBtn.setOnClickListener(oclBtn);
         nextBtn.setOnClickListener(oclBtn);
@@ -160,6 +139,10 @@ public class RegistrationActivity extends Activity implements RegistrationContra
     @Override
     public void showProgress() {
 
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setMessage(getResources().getString(R.string.text_progress_dialog));
+        mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
 
     }
@@ -167,7 +150,7 @@ public class RegistrationActivity extends Activity implements RegistrationContra
     @Override
     public void hideProgress() {
 
-        mProgressDialog.hide();
+        mProgressDialog.dismiss();
 
     }
 

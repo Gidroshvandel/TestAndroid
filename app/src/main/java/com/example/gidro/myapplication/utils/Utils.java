@@ -8,7 +8,7 @@ import com.example.gidro.myapplication.R;
 
 public class Utils {
 
-    public static int numberToDrawbleIdPriority(int number){
+    public static int numberToDrawableIdPriority(int number){
 
         int id = 0;
 

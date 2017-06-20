@@ -2,6 +2,7 @@ package com.example.gidro.myapplication.mvp.notes;
 
 import com.example.gidro.myapplication.model.Note;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,9 @@ import java.util.List;
 public interface NotesContract {
     interface View {
 
-        void showNoteElementDetails(List<Note> noteList);
+        void showNoteElementDetails(Note note, int noteId);
+
+        void showNoteElements(ArrayList<Note> noteList);
 
         void showProgress();
 
@@ -22,7 +25,13 @@ public interface NotesContract {
 
         void onViewCreate();
 
-        void onListElementClick();
+        void onListElementClick(Note note, int noteId);
+
+        void onResultEdit(Note note, int noteId);
+
+        void onResultCancel();
+
+        void onResultDelete(int noteId);
 
     }
 }

@@ -38,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         Button btnLogin = (Button) findViewById(R.id.button_login);
         Button btnRegistration = (Button) findViewById(R.id.button_registration);
 
-        passwordText  = (EditText) findViewById(R.id.editTextPassword);
+        passwordText = (EditText) findViewById(R.id.editTextPassword);
 
         passwordText.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -47,27 +47,26 @@ public class LoginActivity extends AppCompatActivity {
                 final int DRAWABLE_TOP = 1;
                 final int DRAWABLE_RIGHT = 2;
                 final int DRAWABLE_BOTTOM = 3;
-                if(event.getRawX() >= (passwordText.getRight() - passwordText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                if (event.getRawX() >= (passwordText.getRight() - passwordText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
 
-                    switch ( event.getAction() ) {
+                    switch (event.getAction()) {
 
-                    case MotionEvent.ACTION_UP:
-                        passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                        passwordText.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.ic_eye_open, 0);
-                        break;
+                        case MotionEvent.ACTION_UP:
+                            passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                            passwordText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye_open, 0);
+                            break;
 
-                    case MotionEvent.ACTION_DOWN:
-                        passwordText.setInputType(InputType.TYPE_CLASS_TEXT);
-                        passwordText.setCompoundDrawablesWithIntrinsicBounds( 0, 0, R.drawable.ic_eye_close, 0);
-                        break;
+                        case MotionEvent.ACTION_DOWN:
+                            passwordText.setInputType(InputType.TYPE_CLASS_TEXT);
+                            passwordText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye_close, 0);
+                            break;
 
                         // your action here
 //                        Toast.makeText(LoginActivity.this, "абвгдейка", Toast.LENGTH_SHORT).show();
 
                     }
                     return true;
-                }
-                else{
+                } else {
                     return false;
                 }
             }
@@ -79,12 +78,12 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // по id определеяем кнопку, вызвавшую этот обработчик
                 switch (v.getId()) {
-                case R.id.button_login:
-                    onClickLogin(v);
-                    break;
-                case R.id.button_registration:
-                    onClickRegistration(v);
-                    break;
+                    case R.id.button_login:
+                        onClickLogin(v);
+                        break;
+                    case R.id.button_registration:
+                        onClickRegistration(v);
+                        break;
                 }
 
             }
@@ -100,11 +99,12 @@ public class LoginActivity extends AppCompatActivity {
 
         EditText passwordText = (EditText) findViewById(R.id.editTextPassword);
 
-        User user = new User( emailText.getText().toString(), passwordText.getText().toString() );
+        User user = new User(emailText.getText().toString(), passwordText.getText().toString());
 
         sendNetworkRequest(user);
 
     }
+
     private void onClickRegistration(View view) {
 
         Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
