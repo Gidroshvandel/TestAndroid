@@ -13,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.gidro.myapplication.api.service.ApiService;
 import com.example.gidro.myapplication.api.service.LoginService;
 import com.example.gidro.myapplication.model.User;
 import com.example.gidro.myapplication.mvp.notes.NotesActivity;
@@ -28,7 +29,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText passwordText;
+    private CustomEditText passwordText;
+
+    private boolean flag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,36 +41,22 @@ public class LoginActivity extends AppCompatActivity {
         Button btnLogin = (Button) findViewById(R.id.button_login);
         Button btnRegistration = (Button) findViewById(R.id.button_registration);
 
-        passwordText = (EditText) findViewById(R.id.editTextPassword);
+        passwordText = (CustomEditText) findViewById(R.id.editTextPassword);
 
-        passwordText.setOnTouchListener(new View.OnTouchListener() {
+        flag = false;
+
+        passwordText.setRightDrawableClick(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final int DRAWABLE_LEFT = 0;
-                final int DRAWABLE_TOP = 1;
-                final int DRAWABLE_RIGHT = 2;
-                final int DRAWABLE_BOTTOM = 3;
-                if (event.getRawX() >= (passwordText.getRight() - passwordText.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-
-                    switch (event.getAction()) {
-
-                        case MotionEvent.ACTION_UP:
-                            passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                            passwordText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye_open, 0);
-                            break;
-
-                        case MotionEvent.ACTION_DOWN:
-                            passwordText.setInputType(InputType.TYPE_CLASS_TEXT);
-                            passwordText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye_close, 0);
-                            break;
-
-                        // your action here
-//                        Toast.makeText(LoginActivity.this, "абвгдейка", Toast.LENGTH_SHORT).show();
-
-                    }
-                    return true;
-                } else {
-                    return false;
+            public void onClick(View v) {
+                if (flag){
+                    passwordText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    passwordText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye_open, 0);
+                    flag = false;
+                }
+                else {
+                    passwordText.setInputType(InputType.TYPE_CLASS_TEXT);
+                    passwordText.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.ic_eye_close, 0);
+                    flag = true;
                 }
             }
         });
@@ -114,42 +103,19 @@ public class LoginActivity extends AppCompatActivity {
 
     private void sendNetworkRequest(User user) {
 
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        // set your desired log level
-        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
-
-        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-        // add your other interceptors …
-
-        // add logging as last interceptor
-        httpClient.addInterceptor(logging);  // <-- this is the important line!
-
-
-        Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:2525/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(httpClient.build());
-
-        Retrofit retrofit = builder.build();
-
-        LoginService loginService = retrofit.create(LoginService.class);
-
-        Call<User> call = loginService.login(user.getEmail(), user.getPassword());
-
         final ProgressDialog mProgressDialog = new ProgressDialog(LoginActivity.this);
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         mProgressDialog.setMessage(getResources().getString(R.string.text_progress_dialog));
         mProgressDialog.setCanceledOnTouchOutside(false);
         mProgressDialog.show();
 
-        call.enqueue(new Callback<User>() {
+        ApiService.getInstance().create(LoginService.class).login(user.getEmail(), user.getPassword()).enqueue( new Callback<User>() {
 
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 mProgressDialog.hide();
                 Intent intent = new Intent(LoginActivity.this, NotesActivity.class);
                 startActivity(intent);
-
             }
 
             @Override
@@ -170,8 +136,6 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         });
                 builder.show();
-                // Create the AlertDialog object and return it
-//                Toast.makeText(LoginActivity.this, R.string.text_error_login, Toast.LENGTH_SHORT).show();
 
             }
         });

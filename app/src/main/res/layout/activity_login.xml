@@ -47,7 +47,7 @@
         tools:layout_constraintTop_creator="1"
         android:hint="@string/text_email"/>
 
-    <EditText
+    <com.example.gidro.myapplication.CustomEditText
         android:id="@+id/editTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
