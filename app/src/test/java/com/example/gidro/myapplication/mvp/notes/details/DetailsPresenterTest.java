@@ -11,6 +11,7 @@ import org.robolectric.RobolectricTestRunner;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -61,12 +62,14 @@ public class DetailsPresenterTest {
     public void onNoteHeaderChange(){
         setNote();
         presenter.onNoteHeaderChange(viewModel.getNote().getHeader());
+        verify(viewModel.getNote()).setHeader(anyString());
     }
 
     @Test
     public void onNoteDetailsInformationChange(){
         setNote();
         presenter.onNoteDetailsInformationChange(viewModel.getNote().getDetails());
+        verify(viewModel.getNote()).setDetails(anyString());
     }
 
     @Test

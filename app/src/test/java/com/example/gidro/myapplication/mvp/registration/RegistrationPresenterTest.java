@@ -15,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 
 import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -47,14 +48,13 @@ public class RegistrationPresenterTest {
     }
 
     @Test
-    public void onEmailChange(){
-
+    public void onEmailChange() {
         presenter.onEmailChange(viewModel.getEmail());
-
+        verify(viewModel).setEmail(anyString());
     }
 
     @Test
-    public void onLoginClick(){
+    public void onLoginClick() {
 
         presenter.onLoginClick();
         verify(view).showLogin();
@@ -62,14 +62,13 @@ public class RegistrationPresenterTest {
     }
 
     @Test
-    public void onNameChange(){
-
+    public void onNameChange() {
         presenter.onNameChange(viewModel.getName());
-
+        verify(viewModel).setName(anyString());
     }
 
     @Test
-    public void onNextClick_response(){
+    public void onNextClick_response() {
 
         when(viewModel.getName()).thenReturn("name");
         when(viewModel.getEmail()).thenReturn("email");
@@ -91,7 +90,7 @@ public class RegistrationPresenterTest {
     }
 
     @Test
-    public void onNextClick_fail(){
+    public void onNextClick_fail() {
 
         when(viewModel.getName()).thenReturn("name");
         when(viewModel.getEmail()).thenReturn("email");
@@ -113,14 +112,16 @@ public class RegistrationPresenterTest {
     }
 
     @Test
-    public void onPasswordChange(){
+    public void onPasswordChange() {
 
         presenter.onPasswordChange(viewModel.getPassword());
+        verify(viewModel).setPassword(anyString());
+
 
     }
 
     @Test
-    public void onPasswordVisibilityChange_hideValue(){
+    public void onPasswordVisibilityChange_hideValue() {
         when(viewModel.isShowPassword()).thenReturn(true);
 
         presenter.onPasswordVisibilityChange();
@@ -128,8 +129,9 @@ public class RegistrationPresenterTest {
         verify(view).hidePasswordValue();
         verify(viewModel).setShowPassword(false);
     }
+
     @Test
-    public void onPasswordVisibilityChange_showValue(){
+    public void onPasswordVisibilityChange_showValue() {
         when(viewModel.isShowPassword()).thenReturn(false);
 
         presenter.onPasswordVisibilityChange();
@@ -139,7 +141,7 @@ public class RegistrationPresenterTest {
     }
 
     @Test
-    public void onDialogOkClick(){
+    public void onDialogOkClick() {
 
         presenter.onDialogOkClick();
         verify(view).showNotes();
