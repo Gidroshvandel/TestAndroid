@@ -3,7 +3,6 @@ package com.example.gidro.myapplication.mvp.notes.details;
 import com.example.gidro.myapplication.model.Note;
 
 import static android.app.Activity.RESULT_CANCELED;
-import static android.app.Activity.RESULT_FIRST_USER;
 import static android.app.Activity.RESULT_OK;
 
 /**
@@ -14,7 +13,6 @@ public class DetailsPresenter implements DetailsContract.Presenter {
 
     private DetailsContract.View view;
     private DetailsViewModel viewModel;
-    private DetailsModel model;
 
     public DetailsPresenter(DetailsContract.View view, DetailsViewModel viewModel, Note note) {
         this.view = view;

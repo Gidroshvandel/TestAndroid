@@ -4,21 +4,15 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.Toast;
 
-import com.example.gidro.myapplication.LoginActivity;
 import com.example.gidro.myapplication.R;
 import com.example.gidro.myapplication.adapters.NotesAdapter;
 import com.example.gidro.myapplication.model.Note;
 import com.example.gidro.myapplication.mvp.notes.details.DetailsActivity;
-import com.example.gidro.myapplication.mvp.registration.RegistrationActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Gidro on 29.05.2017.
@@ -42,7 +36,7 @@ public class NotesActivity extends Activity implements NotesContract.View, Notes
         presenter = new NotesPresenter(this, new NotesViewModel(), new NotesModel());
 
         llm = new LinearLayoutManager(this);
-        
+
         notesRv = (RecyclerView) findViewById(R.id.rv_notes);
         notesRv.setLayoutManager(llm);
 

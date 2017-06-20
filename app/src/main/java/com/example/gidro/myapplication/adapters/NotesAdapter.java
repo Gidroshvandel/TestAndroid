@@ -12,7 +12,6 @@ import com.example.gidro.myapplication.model.Note;
 import com.example.gidro.myapplication.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Gidro on 06.06.2017.

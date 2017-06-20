@@ -4,7 +4,6 @@ import com.example.gidro.myapplication.model.Note;
 import com.example.gidro.myapplication.mvp.BasePresenter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Gidro on 02.06.2017.

@@ -15,8 +15,8 @@ import android.widget.EditText;
 
 import com.example.gidro.myapplication.CustomEditText;
 import com.example.gidro.myapplication.LoginActivity;
-import com.example.gidro.myapplication.mvp.notes.NotesActivity;
 import com.example.gidro.myapplication.R;
+import com.example.gidro.myapplication.mvp.notes.NotesActivity;
 
 /**
  * Created by Gidro on 26.05.2017.

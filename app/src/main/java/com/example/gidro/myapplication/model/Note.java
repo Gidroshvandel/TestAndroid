@@ -1,8 +1,6 @@
 package com.example.gidro.myapplication.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Gidro on 05.06.2017.
